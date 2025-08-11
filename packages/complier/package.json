@@ -1,0 +1,44 @@
+{
+  "name": "larksuite-sheet-control-json-complier",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    "./jsx-runtime": {
+      "import": "./jsx-runtime/index.js"
+    },
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rslib build",
+    "check": "biome check --write",
+    "dev": "rslib build --watch",
+    "format": "biome format --write",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-react": "^7.27.1",
+    "@rslib/core": "^0.11.2",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^22.17.0",
+    "vitest": "^3.2.4"
+  },
+  "private": true,
+  "dependencies": {
+    "@types/react": "^19.1.9",
+    "react": "^19.1.1",
+    "vite": "^7.1.1",
+    "zod": "^4.0.17"
+  }
+}
