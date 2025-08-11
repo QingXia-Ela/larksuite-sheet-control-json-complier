@@ -48,7 +48,9 @@ export async function importFromString(code: string, filename: string = 'dynamic
     
     try {
         // 导入模块
-        const module = await import(filePath);
+        const module = await import(
+            path.resolve(`./${filePath}`)
+        );
         return module;
     } finally {
         // 清理临时文件（可选，根据需求决定是否保留）

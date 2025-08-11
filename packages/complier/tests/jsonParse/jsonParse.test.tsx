@@ -8,7 +8,5 @@ test('Parse platform component type', async () => {
     module.default
   )
   
-  console.log(
-    await complieToJson(nodes, module)
-  );
+  await complieToJson(nodes, module)
 })

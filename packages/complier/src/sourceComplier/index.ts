@@ -1,17 +1,9 @@
 import babel from '@babel/core'
 import transformPlatformElement from '../babelPlugins/component-transform'
-import babelAddReactNamespaceForDefaultFn from '../babelPlugins/default-add-react-namesp'
+// import babelAddReactNamespaceForDefaultFn from '../babelPlugins/default-add-react-namesp'
 
-function addReactNamespaceForDefaultFn(str: string) {
-  return babel.transformSync(str, {
-    plugins: [
-      babelAddReactNamespaceForDefaultFn
-    ]
-  })
-}
-
-function parseJSX(str: string) {
-  const code = babel.transformSync(str, {
+async function parseJSX(str: string) {
+  const code = await babel.transformAsync(str, {
     presets: [
       // [
       //   '@babel/preset-env',
@@ -26,9 +18,6 @@ function parseJSX(str: string) {
         }
       ]
     ],
-    plugins: [
-      babelAddReactNamespaceForDefaultFn
-    ]
   })
 
   return code
@@ -36,10 +25,10 @@ function parseJSX(str: string) {
 
 const createElementReg = /React\.createElement(\([^]+?\))/g
 
-export default function complieJSXFile(str: string) {
-  const code = parseJSX(str)?.code!
+export default async function complieJSXFile(str: string) {
+  const code = (await parseJSX(str))?.code!
 
-  return babel.transformSync(
+  return (await babel.transformAsync(
     // code.replace(`"use strict";`, `"use strict";\nimport React from 'react'`),
     code,
     {
@@ -47,5 +36,5 @@ export default function complieJSXFile(str: string) {
         transformPlatformElement
       ],
     }
-  )?.code!
+  ))?.code!
 }

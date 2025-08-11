@@ -1,19 +1,42 @@
-type PropsWithChildren<P = unknown> = P & { children?: ReactNode | undefined };
+interface IEventHandler {
+    "eventParams"?: {
+        "stopPropagation": boolean;// 是否阻止冒泡，默认 false
+    }
+    "action"?: string
+    "params"?: any
+}
 
 interface ViewProps {
+    style?: {
+        flexDirection?: 'row' | 'column',
+        justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
+        alignItems?: 'stretch' | 'flex-start' | 'flex-end' | 'center';
+        backgroundColor?: string; 
+    } & CSS.Properties;
+    onClick?: IEventHandler; // 事件绑定
+    onDoubleClick?: IEventHandler; // 事件绑定
 }
 
 interface TextProps {
-
+    style?: {
+        color?: string;
+        fontSize?: number;
+        fontWeight?: number;
+    };
+    content: string | number;
+    onClick?: IEventHandler; // 事件绑定
+    onDoubleClick?: IEventHandler; // 事件绑定
 }
 
 interface ImageProps {
-
+    src: string; // 支持 png、jpeg、svg，不支持 gif
+    onClick?: IEventHandler; // 事件绑定
+    onDoubleClick?: IEventHandler; // 事件绑定
 }
 
-function View(props: PropsWithChildren<ViewProps>): React.ReactNode;
-function Text(props: PropsWithChildren<TextProps>): React.ReactNode;
-function Image(props: PropsWithChildren<ImageProps>): React.ReactNode;
+function View(props: React.PropsWithChildren<ViewProps>): React.ReactNode;
+function Text(props: React.PropsWithChildren<TextProps>): React.ReactNode;
+function Image(props: React.PropsWithChildren<ImageProps>): React.ReactNode;
 
 interface UISchema {
     $schema: '1.0.0'; // 协议版本
@@ -45,4 +68,15 @@ interface UISchema {
         };
         children?: [];
     };
+}
+
+type PickDefs<T = string> = Exclude<Exclude<UISchema['definitions'], undefined>[T], undefined>
+
+type ColorTokensType = PickDefs<'$colorTokens'>
+type I18nType = PickDefs<'$i18n'>
+type DataType = PickDefs<'data'>
+
+declare const $container: {
+    width: number
+    height: number
 }

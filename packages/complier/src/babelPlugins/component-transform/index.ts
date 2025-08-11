@@ -5,11 +5,14 @@ const targetTags = ['View', 'Text', 'Image']
 /**
  * 转换 jsx 文件，并将平台指定元素类型转为字符串而不是函数组件
  */
-export default function transformPlatformElement({ types: t }) {
+export default function transformPlatformElement({ types: t }: {
+  types: any
+}) {
   return {
     name: "larksuite-sheet-control-tag-transformer",
     visitor: {
       Program(path) {
+        // add React import on top
         path.node.body.unshift(
           t.importDeclaration(
             [
@@ -20,21 +23,21 @@ export default function transformPlatformElement({ types: t }) {
             t.stringLiteral('react')
           )
         )
-        // console.log(t.import.toString());
-        // console.log(t.importDeclaration.toString());
       },
-      CallExpression(path, state) {
+      CallExpression(path, state: any) {
         const tagsToConvert = state.opts.tags || targetTags;
-        const callee = path.node.callee;
-        
+        const callee = path.node.callee as Types.V8IntrinsicIdentifier & Record<string, any>;
+
         if (
+          // without custom import source
           (t.isMemberExpression(callee) &&
           t.isIdentifier(callee.object) && callee.object.name === 'React',
           t.isIdentifier(callee.property) && callee.property.name === 'createElement') ||
+          // runtime automatic import
           (t.isIdentifier(callee) && (callee.name === '_jsx' || callee.name === '_jsxs' ) &&
           path.node.leadingComments?.[0]?.value === '#__PURE__')
         ) {
-          const createTarget = path.node.arguments[0]
+          const createTarget = path.node.arguments[0] as Types.Identifier
           if (t.isIdentifier(createTarget) && tagsToConvert.includes(createTarget.name)) {
             path.node.arguments[0] = t.stringLiteral(createTarget.name)
           }

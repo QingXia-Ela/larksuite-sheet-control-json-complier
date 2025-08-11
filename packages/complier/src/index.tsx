@@ -3,16 +3,21 @@ import complieJSXFile from "./sourceComplier";
 import { importFromString } from "./utils/parseStr2File";
 import jsx2Json from "./jsx2Json";
 
+interface IComplieOptions {
+
+}
+
 export async function complieSourceFile(str: string) {
-  const res = complieJSXFile(str)
-  return await importFromString(res, `user-source.js`)
+  const res = await complieJSXFile(str)
+  
+  return await importFromString(res, `user-source.mjs`)
 }
 
 function pickSpeicalExport(source: any) {
-  const { i18n = {}, colorTokens = {}, data = {} } = source
+  const { $i18n = {}, $colorTokens = {}, data = {} } = source
   return {
-    $i18n: i18n,
-    $colorTokens: colorTokens,
+    $i18n,
+    $colorTokens,
     data,
   }
 }
@@ -28,8 +33,8 @@ export async function complieToJson(node: JSX.Element, options: any) {
   }, null, 2)
 }
 
-export async function complie(str: string) {
-  const module = await complieSourceFile(str)
+export async function complie(str: string, options: IComplieOptions = {}) {
+  const module = await complieSourceFile(str)  
   const nodes = await runningTarget(module.default)
   const json = await complieToJson(nodes, module)
   return json

@@ -12,5 +12,6 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "client.d.ts", "node_modules/vite/client.d.ts", "tests"]
+  "include": ["src", "./client.d.ts", "./node_modules/vite/client.d.ts", "tests"],
+  "exclude": ["**/tests/**"]
 }
