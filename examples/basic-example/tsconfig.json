@@ -1,0 +1,7 @@
+{
+  "include": [
+    "src",
+    "client.d.ts"
+  ],
+  "extends": "./node_modules/larksuite-sheet-control-json-complier/tsconfig.client.json"
+}
