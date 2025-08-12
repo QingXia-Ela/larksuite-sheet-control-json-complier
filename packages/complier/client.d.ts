@@ -6,29 +6,62 @@ interface IEventHandler {
     "params"?: any
 }
 
+interface RDKCSSProperties {
+    // 盒子尺寸
+    width?: number | string;
+    height?: number | string;
+    // 外边距
+    marginLeft?: number | string;
+    marginRight?: number | string;
+    marginTop?: number | string;
+    marginBottom?: number | string;
+    // 内边距
+    paddingLeft?: number | string;
+    paddingRight?: number | string;
+    paddingTop?: number | string;
+    paddingBottom?: number | string;
+    // 边框
+    borderWidth?: number | string;
+    borderColor?: string;
+    borderRadius?: {
+        topLeft?: number | string;
+        topRight?: number | string;
+        bottomRight?: number | string;
+        bottomLeft?: number | string;
+    }
+    // 光标类型
+    cursor?: 'default' | 'none' | 'pointer' | 'wait' | 'help' | 'auto' | string;
+}
+
 interface ViewProps {
-    style?: {
+    class?: string;
+    style?: RDKCSSProperties & {
         flexDirection?: 'row' | 'column',
         justifyContent?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
         alignItems?: 'stretch' | 'flex-start' | 'flex-end' | 'center';
         backgroundColor?: string; 
-    } & CSS.Properties;
+    };
+    hidden?: boolean; // 是否隐藏，默认 fasle
     onClick?: IEventHandler; // 事件绑定
     onDoubleClick?: IEventHandler; // 事件绑定
 }
 
 interface TextProps {
-    style?: {
+    class?: string;
+    style?: RDKCSSProperties & {
         color?: string;
         fontSize?: number;
         fontWeight?: number;
     };
-    content: string | number;
+    // todo: combine children or content
+    content?: string | number;
     onClick?: IEventHandler; // 事件绑定
     onDoubleClick?: IEventHandler; // 事件绑定
 }
 
 interface ImageProps {
+    class?: string;
+    style?: RDKCSSProperties;
     src: string; // 支持 png、jpeg、svg，不支持 gif
     onClick?: IEventHandler; // 事件绑定
     onDoubleClick?: IEventHandler; // 事件绑定
@@ -36,6 +69,10 @@ interface ImageProps {
 
 function View(props: React.PropsWithChildren<ViewProps>): React.ReactNode;
 function Text(props: React.PropsWithChildren<TextProps>): React.ReactNode;
+/**
+ * 当 lib 启用 dom 时需要用下方这条进行类型替代
+ */
+// interface Text extends React.Component<React.PropsWithChildren<TextProps>> {}
 function Image(props: React.PropsWithChildren<ImageProps>): React.ReactNode;
 
 interface UISchema {
@@ -43,8 +80,8 @@ interface UISchema {
     definitions?: { // 全局定义申明
         // 自定义色值，key 
         $colorTokens?: Record<string, {
-           lignt_mode: string; // rgba(1, 2, 3, 1)
-           dark_mode: string; // rgba(3, 2, 1, 1)
+            lignt_mode: string; // rgba(1, 2, 3, 1)
+            dark_mode: string; // rgba(3, 2, 1, 1)
         }>;
         // 多语言词条
         $i18n?: Record<string, {

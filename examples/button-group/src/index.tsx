@@ -1,3 +1,6 @@
+import './index.css'
+import { heightLimiter } from './index.module.css'
+
 export const $colorTokens = {
   "border": {
     "dark": "#dee0e3",
@@ -21,6 +24,7 @@ export const data = {
     "mockValue": "Hello World"
   }
 }
+
 export const $i18n = {
   "button3": {
     "zh_CN": "📋 剪贴板",
@@ -43,35 +47,18 @@ export const $i18n = {
 export default function ProgressComponent() {
   return (
     <View
+      // allow class & style merge
+      class="top-wrapper"
       style={{
         "width": "{{$container.width}}",
         "height": "{{$container.height}}",
-        "flexDirection": "row",
-        "alignItems": "center",
-        "justifyContent": "center"
       }}
     >
       <View
-        style={{
-          "width": 210,
-          "height": 30
-        }}
+        class={heightLimiter} // allow module css
       >
         <View
-          style={{
-            "width": 70,
-            "height": 30,
-            "flexDirection": "row",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "borderColor": "{{$colorTokens.border}}",
-            "borderWidth": 1,
-            "borderRadius": {
-              "topLeft": 8,
-              "bottomLeft": 8
-            },
-            "cursor": "pointer"
-          }}
+          class='button-left button-base' // multi class
           onClick={{
             "action": "openLink",
             "params": {
@@ -80,26 +67,13 @@ export default function ProgressComponent() {
           }}
         >
           <Text
-            style={{
-              "width": 70,
-              "paddingLeft": 4,
-              "paddingRight": 4,
-              "color": "{{$colorTokens.textColor}}",
-              "fontSize": 12
-            }}
-          >{"{{$i18n.button1}}"}</Text>
+            class="text"
+          >
+            {"{{$i18n.button1}}"} {/* allow Text in children */}
+          </Text>
         </View>
         <View
-          style={{
-            "width": 70,
-            "height": 30,
-            "flexDirection": "row",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "borderColor": "{{$colorTokens.border}}",
-            "borderWidth": 1,
-            "cursor": "pointer"
-          }}
+          class='button-base' // multi class
           onClick={{
             "action": "httpRequest",
             "params": {
@@ -119,31 +93,12 @@ export default function ProgressComponent() {
           }}
         >
           <Text
-            style={{
-              "width": 70,
-              "paddingLeft": 4,
-              "paddingRight": 4,
-              "color": "{{$colorTokens.textColor}}",
-              "fontSize": 12
-            }}
+            class="text"
             content={"{{$i18n.button2}}"}
           ></Text>
         </View>
         <View
-          style={{
-            "width": 70,
-            "height": 30,
-            "flexDirection": "row",
-            "alignItems": "center",
-            "justifyContent": "center",
-            "borderColor": "{{$colorTokens.border}}",
-            "borderWidth": 1,
-            "borderRadius": {
-              "topRight": 8,
-              "bottomRight": 8
-            },
-            "cursor": "pointer"
-          }}
+          class='button-base button-right'
           onClick={{
             "action": "writeTextToClipboard",
             "params": {
@@ -152,13 +107,7 @@ export default function ProgressComponent() {
           }}
         >
           <Text
-            style={{
-              "width": 70,
-              "paddingLeft": 4,
-              "paddingRight": 4,
-              "color": "{{$colorTokens.textColor}}",
-              "fontSize": 12
-            }}
+            class="text"
             content="{{$i18n.button3}}"
           ></Text>
         </View>

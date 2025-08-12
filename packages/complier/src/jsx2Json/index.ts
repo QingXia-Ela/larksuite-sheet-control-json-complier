@@ -1,8 +1,25 @@
+const TARGET_ATTR = [
+  'style',
+  'onClick',
+  'onDoubleClick',
+  'hidden',
+]
+
+function pickTargetFromProps(props: any = {}) {
+  const res: any = {}
+  for (const i in props) {
+    if (TARGET_ATTR.includes(i)) {
+      res[i] = props[i]
+    }
+  }
+  return res
+}
+
 export default async function jsx2Json(jsx: React.JSX.Element): Promise<any> {
   if (!jsx) return
   const type = jsx.type
   const children = jsx.props?.children
-  const props = { ...jsx.props }
+  const props = pickTargetFromProps(jsx.props)
 
   if (type === 'Text') {
     // todo!: add error tips

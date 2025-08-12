@@ -1,0 +1,36 @@
+.top-wrapper {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-base {
+  width: 70px;
+  height: 30px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  /* allow expression */
+  border-color: "{{$colorTokens.border}}";
+  border-width: 1px;
+  cursor: pointer;
+}
+
+.button-left {
+  /* rdk adapter */
+  border-radius: 8px 0 0 8px;
+}
+
+.button-right {
+  /* rdk adapter */
+  border-radius: 0 8px 8px 0;
+}
+
+.text {
+  width: 70px;
+  padding-left: 4px;
+  padding-right: 4px;
+  /* allow expression */
+  color: "{{$colorTokens.textColor}}";
+  font-size: 12px;
+}
