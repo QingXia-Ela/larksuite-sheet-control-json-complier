@@ -8,6 +8,9 @@ export default defineConfig({
       index: './src/index.tsx'
     }
   },
+  server: {
+    base: '/larksuite-sheet-control-json-complier'
+  },
   html: {
     template: './public/index.html'
   },
