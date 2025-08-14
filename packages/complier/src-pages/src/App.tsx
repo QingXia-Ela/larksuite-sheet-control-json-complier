@@ -40,6 +40,7 @@ function App() {
         <button onClick={example1}>分布条</button>
         <button onClick={example2}>进度条</button>
         <button onClick={example3}>按钮组</button>
+        <button onClick={() => window.open('https://project.feishu.cn/openapp/plugin/dsl/builder', "_blank")}>前往官方在线布局工具</button>
       </div>
       <div className="input-wrapper flex flex-1">
         <div className="editor-left flex flex-col">
