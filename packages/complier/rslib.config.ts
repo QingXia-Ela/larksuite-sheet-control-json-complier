@@ -1,25 +1,54 @@
+import { pluginNodePolyfill } from '@rsbuild/plugin-node-polyfill';
 import { defineConfig } from '@rslib/core';
 
 export default defineConfig({
   lib: [
     {
       format: 'esm',
-      syntax: ['node 18'],
       dts: {
         bundle: true,
         abortOnError: false,
       },
-      bundle: true
+      output: {
+        externals: ['esbuild', /babel/]
+      },
+      bundle: true,
+      source: {
+        entry: {
+          index: './src/index.tsx',
+          node: './src/node.ts',
+        },
+      },
     },
-  ],
-  source: {
-    entry: {
-      index: './src/index.tsx',
-      node: './src/node.ts'
+    {
+      format: 'esm',
+      plugins: [
+        pluginNodePolyfill(),
+      ],
+      output: {
+        target: 'web',
+      },
+      dts: {
+        bundle: true,
+        abortOnError: false,
+      },
+      bundle: true,
+      source: {
+        entry: {
+          browser: './src/browser.ts'
+        }
+      },
+      tools: {
+        rspack(_config, { addRules }) {
+          addRules({
+            test: /\.wasm$/,
+            type: 'asset'
+          })
+        }
+      },
     }
-  },
+  ],
   output: {
-    target: 'node',
-    externals: [/@babel/, 'esbuild']
+    cleanDistPath: false,
   },
 });

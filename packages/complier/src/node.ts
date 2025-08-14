@@ -1,12 +1,33 @@
 import path from 'path'
 import fs from 'fs/promises'
-import { complie } from '.'
+import { complieToJson, runningTarget } from '.'
 import esbuild from 'esbuild'
-
+import complieJSXFile from './sourceComplier'
+import { importFromString } from './utils/parseStr2File'
 
 interface IComplieOptions {
 
 }
+
+
+export async function complieSourceFile(str: string) {
+  const res = await complieJSXFile(str)
+  
+  const module =  await importFromString(res, `user-source.mjs`)
+  
+  return module
+}
+
+export async function complie(str: string, options: IComplieOptions = {}) {
+  // babel 转译
+  const module = await complieSourceFile(str)
+  // 执行目标用户函数
+  const nodes = await runningTarget(module.default)
+  // 提取 json
+  const json = await complieToJson(nodes, module)
+  return json
+}
+
 
 export async function complieFile(path: string, options: IComplieOptions) {
   await esbuild.build({

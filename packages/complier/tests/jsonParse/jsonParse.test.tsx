@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest'
 import testFile from './testFile?raw'
-import { complieSourceFile, complieToJson, runningTarget } from '../../src'
+import { complieToJson, runningTarget } from '../../src'
+import { complieSourceFile } from '../../src/node'
 
 test('Parse platform component type', async () => {
   const module = await complieSourceFile(testFile)

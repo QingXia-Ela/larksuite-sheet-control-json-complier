@@ -22,7 +22,7 @@ function stringToFile(str: string, filename: string, mimeType: string): File {
  * @param {string} filename - 临时文件名
  * @returns {Promise<string>} 临时文件的路径
  */
-async function stringToTempFile(content: string, filename: string = 'dynamic-module.js'): Promise<string> {
+export async function stringToTempFile(content: string, filename: string = 'dynamic-module.js'): Promise<string> {
     // 创建临时文件路径
     const tempDir = './node_modules/.larksuite-complier';
     const filePath = path.join(tempDir, filename);

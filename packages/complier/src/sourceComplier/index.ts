@@ -1,22 +1,25 @@
-import babel from '@babel/core'
+import * as babel from '@babel/core'
 import transformPlatformElement from '../babelPlugins/component-transform'
-// import babelAddReactNamespaceForDefaultFn from '../babelPlugins/default-add-react-namesp'
+// @ts-expect-error: type lost
+import presetReact from '@babel/preset-react'
 
 async function parseJSX(str: string) {
+  
   const code = await babel.transformAsync(str, {
     presets: [
       // [
       //   '@babel/preset-env',
 
       // ],
-      [
-        '@babel/preset-react',
-        {
-          // pragma: 'test',
-          // pragmaFrag: 'Frag',
-          // runtime: 'automatic'
-        }
-      ]
+      presetReact,
+      // [
+      //   '@babel/preset-react',
+      //   {
+      //     // pragma: 'test',
+      //     // pragmaFrag: 'Frag',
+      //     // runtime: 'automatic'
+      //   }
+      // ]
     ],
   })
 
@@ -25,7 +28,9 @@ async function parseJSX(str: string) {
 
 const createElementReg = /React\.createElement(\([^]+?\))/g
 
-export default async function complieJSXFile(str: string) {
+export default async function complieJSXFile(str: string, options?: {
+  cjsReactImport?: boolean
+}) {
   const code = (await parseJSX(str))?.code!
 
   return (await babel.transformAsync(
