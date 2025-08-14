@@ -25,7 +25,7 @@
     "check": "biome check --write",
     "dev": "rslib build --watch",
     "pages": "cd src-pages && rsbuild dev",
-    "pages:build": "cd src-pages && rsbuild build && rsbuild build",
+    "pages:build": "cd src-pages && rsbuild build",
     "format": "biome format --write",
     "test": "vitest run"
   },
