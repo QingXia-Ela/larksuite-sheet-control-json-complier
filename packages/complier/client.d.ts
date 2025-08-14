@@ -68,11 +68,11 @@ interface ImageProps {
 }
 
 function View(props: React.PropsWithChildren<ViewProps>): React.ReactNode;
-function Text(props: React.PropsWithChildren<TextProps>): React.ReactNode;
+// function Text(props: React.PropsWithChildren<TextProps>): React.ReactNode;
 /**
  * 当 lib 启用 dom 时需要用下方这条进行类型替代
  */
-// interface Text extends React.Component<React.PropsWithChildren<TextProps>> {}
+interface Text extends React.Component<React.PropsWithChildren<TextProps>> {}
 function Image(props: React.PropsWithChildren<ImageProps>): React.ReactNode;
 
 interface UISchema {

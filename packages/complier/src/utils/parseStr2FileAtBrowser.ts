@@ -1,6 +1,5 @@
 import * as React from "react";
 
-// @ts-expect-error: move to top ctx
 window.React = React
 /**
  * 将字符串转换为File对象

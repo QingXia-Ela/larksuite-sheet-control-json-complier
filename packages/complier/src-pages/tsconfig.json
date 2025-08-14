@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "module": "ESNext",
     "target": "esnext",
     "noEmit": true,
@@ -13,6 +13,6 @@
     "allowImportingTsExtensions": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "./client.d.ts", "./node_modules/vite/client.d.ts", "tests"],
-  "exclude": ["**/tests/**", "template", "src-pages"]
+  "include": ["src", "./client.d.ts", "../node_modules/vite/client.d.ts", "../client.d.ts"],
+  "exclude": ["**/tests/**", "template"]
 }

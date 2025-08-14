@@ -10,10 +10,14 @@ interface IComplieOptions {
 
 }
 
+let initedESbuild = false
+
 async function initESbuild() {
+  if (initedESbuild) return
   await esbuild.initialize({
     wasmURL: wasmURL.pathname,
   })
+  initedESbuild = true
 }
 
 export async function complieSourceFile(str: string) {
@@ -55,7 +59,5 @@ export async function complieFile(code: string) {
   const decoder = new TextDecoder()
   const output = decoder.decode(res.outputFiles[0].contents)
   
-  console.log(
-    await complie(output)
-  );
+  return await complie(output)
 }
